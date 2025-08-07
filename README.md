@@ -339,31 +339,6 @@ docker-compose up -d --scale api=3
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Contributors
-
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/your-username">
-        <img src="https://github.com/identicons/your-username.png" width="100px;" alt=""/><br />
-        <sub><b>Your Name</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/contributor-1">
-        <img src="https://github.com/identicons/contributor-1.png" width="100px;" alt=""/><br />
-        <sub><b>Contributor 1</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/contributor-2">
-        <img src="https://github.com/identicons/contributor-2.png" width="100px;" alt=""/><br />
-        <sub><b>Contributor 2</b></sub>
-      </a>
-    </td>
-  </tr>
-</table>
-
 Want to contribute? Check out our [Contributing Guidelines](CONTRIBUTING.md)!
 
 ## 🙏 Acknowledgments
