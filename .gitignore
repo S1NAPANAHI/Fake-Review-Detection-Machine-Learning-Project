@@ -134,6 +134,76 @@ dmypy.json
 /artifacts/models/*
 /logs/*
 
+# Additional Data and ML
+/data/external/*
+/data/interim/*
+/artifacts/features/*
+/artifacts/checkpoints/*
+/artifacts/exports/*
+/artifacts/reports/*
+/artifacts/metrics/*
+/artifacts/feature_store/*
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.model
+*.onnx
+*.pb
+*.pth
+*.pt
+*.safetensors
+*.bin
+
+# Logs and Monitoring
+logs/
+*.log
+*.log.*
+logfile*
+tensorboard/
+mlruns/
+wandb/
+.wandb/
+mlflow/
+
+# Docker
+Dockerfile.prod
+docker-compose.override.yml
+.dockerignore
+
+# Jupyter Notebooks (outputs)
+*.ipynb
+!notebooks/*.ipynb
+!notebooks/examples/*.ipynb
+
+# Environment and Configuration
+.env*
+!.env.example
+config/local.yaml
+config/development.yaml
+config/production.yaml
+secrets/
+
+# Large Files and Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.csv
+*.json
+*.parquet
+*.feather
+!data/samples/*.csv
+!data/samples/*.json
+
+# Temporary and Cache Files
+tmp/
+temp/
+cache/
+.cache/
+__temp__/
+
 # IDE
 .vscode/
 .idea/

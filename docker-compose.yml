@@ -1,0 +1,154 @@
+version: '3.8'
+
+services:
+  # Main API service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - LOG_LEVEL=INFO
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://postgres:password@db:5432/fake_review_db
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - ./config:/app/config
+      - ./artifacts:/app/artifacts
+      - ./logs:/app/logs
+    networks:
+      - fake-review-network
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Redis cache service
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    networks:
+      - fake-review-network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  # PostgreSQL database
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=fake_review_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - fake-review-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  # MLflow tracking server
+  mlflow:
+    image: python:3.11-slim
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=postgresql://postgres:password@db:5432/mlflow_db
+      - MLFLOW_DEFAULT_ARTIFACT_ROOT=/app/mlflow-artifacts
+    volumes:
+      - mlflow_artifacts:/app/mlflow-artifacts
+      - ./requirements.txt:/app/requirements.txt
+    command: >
+      sh -c "
+        pip install mlflow psycopg2-binary &&
+        mlflow server
+          --backend-store-uri postgresql://postgres:password@db:5432/mlflow_db
+          --default-artifact-root /app/mlflow-artifacts
+          --host 0.0.0.0
+          --port 5000
+      "
+    depends_on:
+      - db
+    networks:
+      - fake-review-network
+
+  # Prometheus monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - fake-review-network
+
+  # Grafana dashboards
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    networks:
+      - fake-review-network
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/ssl/private
+    depends_on:
+      - api
+    networks:
+      - fake-review-network
+
+# Named volumes for persistence
+volumes:
+  redis_data:
+  postgres_data:
+  mlflow_artifacts:
+  prometheus_data:
+  grafana_data:
+
+# Custom network
+networks:
+  fake-review-network:
+    driver: bridge

@@ -1,0 +1,226 @@
+# Fake Review Detection System Configuration
+# Path aliases and default ML/feature parameters
+
+# Path Configuration
+paths:
+  # Data paths
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  external_data: "data/external"
+  interim_data: "data/interim"
+  
+  # Model paths
+  models: "artifacts/models"
+  model_checkpoints: "artifacts/checkpoints"
+  model_exports: "artifacts/exports"
+  
+  # Feature paths
+  features: "artifacts/features"
+  feature_store: "artifacts/feature_store"
+  
+  # Logs and reports
+  logs: "logs"
+  reports: "artifacts/reports"
+  metrics: "artifacts/metrics"
+  
+  # Configuration
+  config: "config"
+  experiments: "config/experiments"
+
+# Machine Learning Configuration
+ml:
+  # Model parameters
+  model:
+    # Text processing models
+    text_embedding:
+      model_name: "sentence-transformers/all-MiniLM-L6-v2"
+      max_seq_length: 512
+      batch_size: 32
+      
+    # Classification models
+    classifier:
+      model_type: "random_forest"  # Options: random_forest, xgboost, lightgbm, neural_network
+      n_estimators: 100
+      max_depth: 10
+      random_state: 42
+      
+    # Neural network specific
+    neural_network:
+      hidden_layers: [128, 64, 32]
+      dropout_rate: 0.3
+      learning_rate: 0.001
+      epochs: 50
+      batch_size: 32
+      early_stopping_patience: 5
+  
+  # Training configuration
+  training:
+    test_size: 0.2
+    validation_size: 0.2
+    cross_validation_folds: 5
+    random_state: 42
+    stratify: true
+    
+  # Feature engineering
+  features:
+    # Text features
+    text:
+      max_features: 10000
+      ngram_range: [1, 2]
+      min_df: 2
+      max_df: 0.95
+      use_tfidf: true
+      use_word2vec: true
+      use_sentiment: true
+      
+    # Behavioral features
+    behavioral:
+      rating_statistics: true
+      review_length_stats: true
+      temporal_patterns: true
+      user_activity_patterns: true
+      
+    # Network features
+    network:
+      user_similarity_threshold: 0.8
+      review_similarity_threshold: 0.9
+      graph_features: true
+
+# Data Processing Configuration
+data:
+  # Data quality
+  quality:
+    min_review_length: 10
+    max_review_length: 5000
+    min_rating: 1
+    max_rating: 5
+    required_fields: ["review_text", "rating", "user_id", "product_id"]
+    
+  # Preprocessing
+  preprocessing:
+    # Text cleaning
+    text_cleaning:
+      remove_html: true
+      remove_urls: true
+      remove_emails: true
+      remove_phone_numbers: true
+      normalize_whitespace: true
+      convert_to_lowercase: true
+      remove_special_chars: false
+      remove_numbers: false
+      
+    # Language processing
+    nlp:
+      remove_stopwords: true
+      apply_stemming: false
+      apply_lemmatization: true
+      language: "english"
+      
+  # Sampling and balancing
+  sampling:
+    balance_classes: true
+    sampling_strategy: "auto"  # Options: auto, majority, minority, not minority, not majority
+    random_state: 42
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    classification:
+      - "accuracy"
+      - "precision"
+      - "recall"
+      - "f1_score"
+      - "roc_auc"
+      - "confusion_matrix"
+    
+  # Cross-validation
+  cv_scoring: "f1_macro"
+  cv_folds: 5
+  
+  # Model selection
+  model_selection:
+    grid_search: true
+    param_grid_size: "medium"  # Options: small, medium, large
+    scoring_metric: "f1_macro"
+    
+# Logging Configuration
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_rotation: true
+  max_file_size: "10MB"
+  backup_count: 5
+  
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  workers: 4
+  timeout: 30
+  max_request_size: "16MB"
+  prediction_threshold: 0.5
+  
+  # CORS settings
+  cors:
+    origins: ["*"]
+    allow_credentials: true
+    allow_methods: ["*"]
+    allow_headers: ["*"]
+    
+  # Rate limiting
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+    burst_size: 10
+
+# Deployment Configuration
+deployment:
+  model_path: null  # Will auto-detect latest model if null
+  preprocessor_path: null  # Will auto-detect preprocessor if null
+  load_on_startup: true
+  health_check_interval: 300  # seconds
+  
+# Monitoring Configuration
+monitoring:
+  prometheus:
+    enabled: true
+    metrics_path: "/metrics"
+    
+  logging:
+    api_requests: true
+    predictions: true
+    errors: true
+    performance: true
+  
+# Database Configuration (if applicable)
+database:
+  type: "sqlite"  # Options: sqlite, postgresql, mysql
+  name: "fake_review_detection.db"
+  host: "localhost"
+  port: 5432
+  pool_size: 10
+  max_overflow: 20
+  
+# Experiment Tracking
+experiment:
+  tracking_backend: "mlflow"  # Options: mlflow, wandb, tensorboard
+  experiment_name: "fake_review_detection"
+  auto_log: true
+  log_artifacts: true
+  
+# Resource Configuration
+resources:
+  # Memory and CPU
+  max_memory_usage: "8GB"
+  n_jobs: -1  # Use all available cores
+  
+  # GPU configuration
+  use_gpu: false
+  gpu_device: 0
+  
+# Environment Configuration
+environment:
+  debug: false
+  random_seed: 42
+  reproducible: true

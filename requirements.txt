@@ -1,0 +1,120 @@
+# Core Data Science and ML Libraries
+numpy==1.24.3
+pandas==2.0.3
+scipy==1.11.1
+scikit-learn==1.3.0
+
+# Deep Learning and NLP
+torch==2.0.1
+transformers==4.30.2
+sentence-transformers==2.2.2
+huggingface-hub==0.16.4
+
+# Gradient Boosting
+xgboost==1.7.6
+lightgbm==4.0.0
+catboost==1.2
+
+# Text Processing and NLP
+nltk==3.8.1
+spacy==3.6.0
+textblob==0.17.1
+wordcloud==1.9.2
+
+# Data Visualization
+matplotlib==3.7.1
+seaborn==0.12.2
+plotly==5.15.0
+
+# Web Framework and API
+fastapi==0.100.0
+uvicorn==0.23.1
+pydantic==1.10.12
+python-multipart==0.0.6
+
+# Data Processing and Storage
+sqlalchemy==2.0.19
+psycopg2-binary==2.9.6
+pymongo==4.4.1
+redis==4.6.0
+
+# Experiment Tracking and MLOps
+mlflow==2.5.0
+wandb==0.15.5
+tensorboard==2.13.0
+
+# Configuration and Utilities
+pyyaml==6.0
+python-dotenv==1.0.0
+click==8.1.6
+tqdm==4.65.0
+joblib==1.3.1
+
+# Testing and Quality
+pytest==7.4.0
+pytest-cov==4.1.0
+black==23.7.0
+flake8==6.0.0
+isort==5.12.0
+
+# Jupyter and Notebooks
+jupyter==1.0.0
+ipykernel==6.24.0
+notebook==6.5.4
+
+# HTTP and Networking
+requests==2.31.0
+httpx==0.24.1
+aiohttp==3.8.5
+
+# Data Validation
+great-expectations==0.17.8
+
+# Imbalanced Learning
+imbalanced-learn==0.10.1
+
+# Model Interpretability
+shap==0.42.1
+lime==0.2.0.1
+
+# Image Processing (if needed for review images)
+pillow==10.0.0
+opencv-python==4.8.0.74
+
+# Time Series and Statistical Analysis
+statsmodels==0.14.0
+prophet==1.1.4
+
+# Graph Analysis (for network features)
+networkx==3.1
+igraph==0.10.6
+
+# Memory and Performance
+memory-profiler==0.60.0
+psutil==5.9.5
+
+# AWS/Cloud Services (optional)
+boto3==1.28.17
+botocore==1.31.17
+
+# Development and Debugging
+ipdb==0.13.13
+rich==13.4.2
+
+# Security
+cryptography==41.0.2
+bcrypt==4.0.1
+
+# Data Format Support
+openpyxl==3.1.2
+xlsxwriter==3.1.2
+pyarrow==12.0.1
+fastparquet==2023.7.0
+
+# Monitoring and Observability
+prometheus_client==0.17.1
+alibi-detect==0.11.4
+
+# Environment and Deployment
+gunicorn==20.1.0
+docker==6.1.3
