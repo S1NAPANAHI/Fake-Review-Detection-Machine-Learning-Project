@@ -352,8 +352,7 @@ Want to contribute? Check out our [Contributing Guidelines](CONTRIBUTING.md)!
 
 - **Issues**: [GitHub Issues](https://github.com/your-username/fake-review-detection/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/your-username/fake-review-detection/discussions)
-- **Email**: your-email@example.com
-
+- **Email**: sina.panahi@outlook.com
 ---
 
 **⭐ If this project helps you, please give it a star!**
