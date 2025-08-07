@@ -350,8 +350,6 @@ Want to contribute? Check out our [Contributing Guidelines](CONTRIBUTING.md)!
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/your-username/fake-review-detection/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/fake-review-detection/discussions)
 - **Email**: sina.panahi@outlook.com
 ---
 
